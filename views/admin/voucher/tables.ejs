@@ -1,0 +1,63 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Game</th>
+      <th>Thumbnail</th>
+      <th>Kategori</th>
+      <th>Nominal</th>
+      <th>Status</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% voucher.forEach((cat,i)=>{ %>
+    <tr>
+      <td><%= i +1 %></td>
+      <td><%= cat.nama %></td>
+
+      <!-- <td><%= cat.category %></td> -->
+      <!-- <td><%= cat.nominal %></td> -->
+      <td>
+        <% if(cat.thumbnail){%>
+        <img style="max-width: 200px" src="/uploads/<%= cat.thumbnail %>" /><% }
+        %>
+      </td>
+      <td><%= cat.category?.nama ?? '-' %></td>
+      <td>
+        <% cat.nominals.forEach((nominal)=>{ %>
+
+        <span class="badge badge-success">
+          <%= nominal.coinName %> <%= nominal.price %>
+        </span>
+
+        <% }) %>
+      </td>
+      <td>
+        <form method="post" action="/voucher/status/<%=cat.id%>?_method=put">
+          <% if(cat.status == 'Y'){ %>
+          <button class="btn btn-success btn-sm">Aktif</button>
+          <% }else{ %>
+          <button class="btn btn-danger btn-sm">Non-Aktif</button>
+          <% } %>
+        </form>
+      </td>
+      <td>
+        <form
+          action="/voucher/delete/<%= cat._id %>?_method=delete"
+          method="post"
+        >
+          <a
+            href="/voucher/edit/<%= cat._id %>"
+            class="btn btn-secondary btn-sm"
+            ><i class="fas fa-pen"></i> Edit</a
+          >
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

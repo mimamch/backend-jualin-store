@@ -1,0 +1,56 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Tipe Pembayaran</th>
+      <th>Bank</th>
+      <th>Status</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% payment.forEach((cat,i)=>{ %>
+    <tr>
+      <td><%= i +1 %></td>
+      <td><%= cat.tipe %></td>
+      <td>
+        <% cat.banks.forEach((e)=>{%>
+        <span class="badge badge-secondary">
+          <%= e.namaPemilik %> <%=e.namaBank%>
+        </span>
+        <br />
+
+        <% }) %>
+      </td>
+      <td>
+        <form method="post" action="/payment/status/<%=cat.id%>?_method=put">
+          <% if(cat.status == 'Y'){ %>
+          <button class="btn btn-success btn-sm">
+            <i class="fas fa-pen"></i> Aktif
+          </button>
+          <% }else{ %>
+          <button class="btn btn-danger btn-sm">
+            <i class="fas fa-pen"></i> Non-Aktif
+          </button>
+          <% } %>
+        </form>
+      </td>
+      <td>
+        <form
+          action="/payment/delete/<%= cat._id %>?_method=delete"
+          method="post"
+        >
+          <a
+            href="/payment/edit/<%= cat._id %>"
+            class="btn btn-secondary btn-sm"
+            ><i class="fas fa-pen"></i> Edit</a
+          >
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

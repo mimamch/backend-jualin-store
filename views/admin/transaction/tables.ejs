@@ -1,0 +1,74 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Game</th>
+      <th>Item</th>
+      <th>Total Harga</th>
+      <th>Status</th>
+      <th>Nama Player</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% transaction.forEach((cat,i)=>{ %>
+    <tr>
+      <td><%= i +1 %></td>
+      <td>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <img
+              width="48px"
+              src="/uploads/<%= cat.historyVoucherTopup.thumbnail %>"
+              alt="thumb"
+            />
+          </li>
+        </ul>
+        <%= cat.historyVoucherTopup?.gameName %>
+        <br />
+        <%= cat.historyVoucherTopup?.category %>
+      </td>
+      <td>
+        <%= cat.historyVoucherTopup?.coinQuantity %> <%=
+        cat.historyVoucherTopup?.coinName %>
+      </td>
+      <td><%= cat.value%></td>
+
+      <td>
+        <form
+          method="post"
+          action="/transaction/status/<%=cat.id%>?_method=put"
+        >
+          <% if(cat.status == 'success'){ %>
+          <button class="btn btn-success btn-sm">success</button>
+          <% } else if(cat.status == 'pending'){ %>
+          <button class="btn btn-warning btn-sm">pending</button>
+          <% }else{ %>
+          <button class="btn btn-danger btn-sm">failed</button>
+          <% } %>
+        </form>
+      </td>
+      <td><%= cat.player?.nama ?? '-' %></td>
+      <td>
+        <form
+          action="/transaction/status/<%= cat._id %>?_method=put&status=failed"
+          method="post"
+        >
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Tolak
+          </button>
+        </form>
+        <br />
+        <form
+          action="/transaction/status/<%= cat._id %>?_method=put&status=success"
+          method="post"
+        >
+          <button type="submit" class="btn btn-info btn-sm">
+            <i class="fas fa-check"></i> Terima
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
