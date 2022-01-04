@@ -16,7 +16,6 @@ module.exports ={
         try {
             const token = req.headers.authorization ? req.headers.authorization.replace('Bearer ', '') : null
             const data = jwt.verify(token, config.jwtKey)
-
             const player = await Player.findOne({_id: data.player.id})
 
             if(!player){
@@ -28,7 +27,7 @@ module.exports ={
             
         } catch (error) {
             res.status(401).json({
-                error: `Not Authorized to access`
+                error: `AKSES DITOLAK, SILAHKAN LOGIN TERLEBIH DAHULU`
             })
         }
     }
