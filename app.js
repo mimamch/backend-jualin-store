@@ -18,7 +18,6 @@ var transactionRouter = require("./app/transaction/router");
 var playerRouter = require("./app/player/router");
 var authRouter = require("./app/auth/router");
 
-app.use(cors());
 
 const url = `/api/v1`;
 
@@ -26,6 +25,7 @@ var session = require("express-session");
 var flash = require("connect-flash");
 
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
