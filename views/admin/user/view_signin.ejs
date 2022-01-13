@@ -30,10 +30,10 @@
       <div class="card card-outline card-primary">
         <% include ../../partials/messages.ejs %>
         <div class="card-header text-center">
-          <a href="/" class="h1"><b>Store</b>GEGE</a>
+          <a href="/" class="h1"><b>Jualin</b>Store</a>
         </div>
         <div class="card-body">
-          <p class="login-box-msg">Sign in to start your session</p>
+          <p class="login-box-msg">Masuk untuk memulai sesi</p>
 
           <form action="/" method="post">
             <div class="input-group mb-3">
@@ -60,7 +60,7 @@
             <div class="row">
               <div class="col-8">
                 <div class="icheck-primary">
-                  <input type="checkbox" id="remember" />
+                  <input type="checkbox" name="remember" id="remember" />
                   <label for="remember"> Remember Me </label>
                 </div>
               </div>
@@ -69,8 +69,15 @@
                 <button type="submit" class="btn btn-primary btn-block">
                   Sign In
                 </button>
+                
               </div>
               <!-- /.col -->
+              
+            </div>
+            <div class="row mt-4 mb-n4">
+              <div class="col-12">
+                <p class="text-right text-sm">Do not have an account? <a href="">SIGN UP</a></p>
+              </div>
             </div>
           </form>
 

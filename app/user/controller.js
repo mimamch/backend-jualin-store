@@ -1,5 +1,7 @@
 const User = require("./model");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("../../config");
 let title = "user";
 
 module.exports = {
@@ -24,6 +26,7 @@ module.exports = {
   actionSignin: async (req, res) => {
     try {
       const { email, password } = req.body;
+
       const check = await User.findOne({ email });
       if (check) {
         if (check.status === "Y") {
@@ -35,6 +38,21 @@ module.exports = {
               status: check.status,
               nama: check.nama,
             };
+            if (req.body.remember) {
+              const token = jwt.sign(
+                {
+                  user: {
+                    id: check.id,
+                    email: check.email,
+                    status: check.status,
+                    nama: check.nama,
+                  },
+                },
+                config.jwtKey
+              );
+
+              res.cookie("token", token, { maxAge: 7 * 24 * 60 * 60 * 1000 });
+            }
 
             res.redirect("./dashboard");
           } else {
@@ -61,6 +79,7 @@ module.exports = {
   actionLogout: (req, res) => {
     try {
       req.session.destroy();
+      res.clearCookie("token");
       res.redirect("/");
     } catch (error) {
       req.flash("alertMessage", error.message);

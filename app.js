@@ -18,7 +18,6 @@ var transactionRouter = require("./app/transaction/router");
 var playerRouter = require("./app/player/router");
 var authRouter = require("./app/auth/router");
 
-
 const url = `/api/v1`;
 
 var session = require("express-session");
